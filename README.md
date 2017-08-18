@@ -14,7 +14,7 @@ Animation is a process of transitioning from one state to another by calculating
 `AnyAnimation` is a set of abstract protocols defining animation components and some particular implementations to showcase how APIs can be used.
 
 ### State
-State here can be anything: scalar `Int` or `Float` value, `CGPath` , or even a `UIImage`. The only requirement is to be able to calculate intermediate between to final states. Protocol `Interpolatable` defines this requirement:
+State here can be anything: scalar `Int` or `Float` value, `CGPath` , or even a `UIImage`. The only requirement is to be able to calculate intermediate between two states. Protocol `Interpolatable` defines this requirement:
 ```
 public protocol Interpolatable {
     func interpolate(to: Self, by: Float) -> Self
@@ -48,8 +48,8 @@ public protocol Animation {
 More concrete `Animation` implementation are sound with QuartzCore animation's classes hierarchy: 
 
 - **`Animation`** _defines **duration** and **tick()**_
-    - **`AnimationSequence`** _synchronizes animations in parallel_
-    - **`AnimationGroup`** _synchronizes animations in sequence_
+    - **`AnimationSequence`** _synchronizes animations in sequence_
+    - **`AnimationGroup`** _synchronizes animations in parallel_
     - **`PropertyAnimation`** _abstract, defines **animatable property** and **timing function**_
         - **`BasicAnimation`** _defines linear interpolation between **initial** and **final**_
 
