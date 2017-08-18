@@ -20,8 +20,7 @@ class ViewController: UIViewController {
         view.center = self.view.center
         self.view.addSubview(view)
         
-        var rotateAnimation = BasicAnimation(from: 0, to: 100, duration: 3.0) { value in
-            let percentage = CGFloat(Double(value) / 100.0)
+        var rotateAnimation = BasicAnimation(from: 0.0, to: 1.0, duration: 3.0) { (percentage: CGFloat) in
             view.transform = CGAffineTransform(rotationAngle: CGFloat.pi * 0.5 * percentage)
         }
         

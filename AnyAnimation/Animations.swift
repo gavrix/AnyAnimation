@@ -145,20 +145,20 @@ extension PropertyAnimation {
 public struct BasicAnimation<T: Interpolatable>: PropertyAnimation {
 
     public func interpolatedValue(at state: Float) -> T {
-         return from * (1 - state) + to * state
+         return initial.interpolate(to: final, by: state)
     }
 
     public var timingFunction: (RelativeTimeInterval) -> Float
     public let animatableProperty: AnimatableProperty<T>
     public let duration: TimeInterval
 
-    private let from: T
-    private let to: T
+    private let initial: T
+    private let final: T
 
     public init(from: T, to: T, on property: AnimatableProperty<T>, duration: TimeInterval) {
         self.animatableProperty = property
-        self.from = from
-        self.to = to
+        self.initial = from
+        self.final = to
         self.duration = duration
         timingFunction = { Float($0.value) }
     }
