@@ -66,9 +66,9 @@ public protocol Animator {
 ```
 
 `AnyAnimation` comes with 3 different `Animator` implementations depending on different timing-related technologies available on iOS: 
-- SpriteKit (`SKAnimator`)
-- DisplayLink (`DisplayLinkAnimator`)
-- CALayer (`LayerAnimator`)
+- SpriteKit (`SKAnimator`) — leveraging `SKAction.customAction`
+- DisplayLink (`DisplayLinkAnimator`) — leveraging `CADisplayLink`
+- CALayer (`LayerAnimator`) — leveraging `CALayer` with custom property (time) animation
 
 All these animators are substitutable, animation's behavior should not depend on animator implementation.
 
