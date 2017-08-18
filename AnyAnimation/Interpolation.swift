@@ -1,7 +1,4 @@
 //
-//  Interpolation.swift
-//  Killme
-//
 //  Created by Sergey Gavrilyuk on 2017-08-17.
 //  Copyright © 2017 Gavrix. All rights reserved.
 //
