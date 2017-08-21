@@ -32,7 +32,7 @@ public struct RelativeTimeInterval {
     public static func +(lhs: RelativeTimeInterval, rhs: RelativeTimeInterval) -> RelativeTimeInterval {
         return RelativeTimeInterval(value: lhs.value + rhs.value)
     }
-
+    
     public static func *(lhs: RelativeTimeInterval, rhs: RelativeTimeInterval) -> RelativeTimeInterval {
         return RelativeTimeInterval(value: lhs.value * rhs.value)
     }
@@ -49,6 +49,8 @@ public struct RelativeTimeInterval {
         return RelativeTimeInterval(value: 1 - value)
     }
 }
+
+public typealias TimingFunction = (RelativeTimeInterval) -> Float
 
 public enum AnimationTiming {
     public static func square(time: RelativeTimeInterval) -> Float {

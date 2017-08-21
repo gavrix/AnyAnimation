@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A5E76AEC1F47A20B00E33DE8 /* KeyPointsAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E76AEB1F47A20B00E33DE8 /* KeyPointsAnimation.swift */; };
 		A5FBEFB91F46A1BF00F62672 /* AnyAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = A5FBEFB71F46A1BF00F62672 /* AnyAnimation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A5FBEFC61F46A1F000F62672 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FBEFC31F46A1F000F62672 /* Animations.swift */; };
 		A5FBEFC71F46A1F000F62672 /* Definitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FBEFC41F46A1F000F62672 /* Definitions.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A5E76AEB1F47A20B00E33DE8 /* KeyPointsAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyPointsAnimation.swift; sourceTree = "<group>"; };
 		A5FBEFB41F46A1BF00F62672 /* AnyAnimation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AnyAnimation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5FBEFB71F46A1BF00F62672 /* AnyAnimation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnyAnimation.h; sourceTree = "<group>"; };
 		A5FBEFB81F46A1BF00F62672 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -39,6 +41,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A5E76AEA1F47A1FA00E33DE8 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				A5E76AEB1F47A20B00E33DE8 /* KeyPointsAnimation.swift */,
+			);
+			name = Animations;
+			sourceTree = "<group>";
+		};
 		A5FBEFAA1F46A1BF00F62672 = {
 			isa = PBXGroup;
 			children = (
@@ -58,6 +68,7 @@
 		A5FBEFB61F46A1BF00F62672 /* AnyAnimation */ = {
 			isa = PBXGroup;
 			children = (
+				A5E76AEA1F47A1FA00E33DE8 /* Animations */,
 				A5FBEFD01F46A20500F62672 /* Animators */,
 				A5FBEFC91F46A1F600F62672 /* Core */,
 				A5FBEFB71F46A1BF00F62672 /* AnyAnimation.h */,
@@ -172,6 +183,7 @@
 				A5FBEFCF1F46A20200F62672 /* DisplayLinkAnimator.swift in Sources */,
 				A5FBEFCE1F46A20200F62672 /* CALayerAnimator.swift in Sources */,
 				A5FBEFC81F46A1F000F62672 /* Interpolation.swift in Sources */,
+				A5E76AEC1F47A20B00E33DE8 /* KeyPointsAnimation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,6 +349,7 @@
 				A5FBEFBE1F46A1BF00F62672 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

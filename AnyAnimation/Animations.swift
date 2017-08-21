@@ -13,7 +13,7 @@ public class AnimatableProperty<T: Interpolatable> {
     }
     let didChange: (T) -> Void
 
-    init(_ value: T, didChange: @escaping (T) -> Void) {
+    public init(_ value: T, didChange: @escaping (T) -> Void) {
         self.value = value
         self.didChange = didChange
     }
@@ -125,24 +125,22 @@ public protocol PropertyAnimation: Animation {
     associatedtype T: Interpolatable
     
     var animatableProperty: AnimatableProperty<T> { get }
-    var timingFunction: (RelativeTimeInterval) -> Float { get }
-    
-    func interpolatedValue(at state: Float) -> T
+    func interpolatedValue(at state: RelativeTimeInterval) -> T
 }
 
 extension PropertyAnimation {
     
     public func tick(at time: RelativeTimeInterval) {
-        let state = timingFunction(time)
-        animatableProperty.value = interpolatedValue(at: state)
+        animatableProperty.value = interpolatedValue(at: time)
     }
 }
 
 
 public struct BasicAnimation<T: Interpolatable>: PropertyAnimation {
 
-    public func interpolatedValue(at state: Float) -> T {
-         return initial.interpolate(to: final, by: state)
+    public func interpolatedValue(at time: RelativeTimeInterval) -> T {
+        let state = timingFunction(time)
+        return initial.interpolate(to: final, by: state)
     }
 
     public var timingFunction: (RelativeTimeInterval) -> Float
@@ -167,7 +165,5 @@ extension BasicAnimation {
         self.init(from: from, to: to, on: AnimatableProperty(from, didChange: applicator), duration: duration)
     }
 }
-
-
 
 
