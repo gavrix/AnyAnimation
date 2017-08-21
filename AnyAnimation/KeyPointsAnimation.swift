@@ -81,7 +81,6 @@ public struct KeyPointsAnimation<T: Interpolatable>: PropertyAnimation {
         
         segments = pointsBuilder.build(startingWith: point)
         
-        dump(segments)
         self.startingPoint = point
         self.duration = duration
         self.animatableProperty = animatableProperty
