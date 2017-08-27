@@ -15,14 +15,14 @@ Animation is a process of transitioning from one state to another by calculating
 
 ### State
 State here can be anything: scalar `Int` or `Float` value, `CGPath` , or even a `UIImage`. The only requirement is to be able to calculate intermediate between two states. Protocol `Interpolatable` defines this requirement:
-```
+```swift
 public protocol Interpolatable {
     func interpolate(to: Self, by: Float) -> Self
 }
 ```
 
 For scalar values interpolation is expressed as `inital * (1 - percent) + final * percent`, which can be expressed in swift as:
-```
+```swift
 public protocol ScalarInterpolatable {
     static func *(lhs: Self, rhs: Float) -> Self
     static func +(lhs: Self, rhs: Self) -> Self
@@ -38,7 +38,7 @@ extension Interpolatable where Self: ScalarInterpolatable {
 ### State change description
 Basically, it is our animation. It's exactly what `CAAnimation` and it's implementations are. It's a description of how we should perform transition. On higher level, however, it doesn't even matter how exactly transition is being performed. The only thing that matters: **percentage**, intermediate position between initial and final states. This percentage is represented as `RelativeTimeInterval` — utility type that wraps `Float` is guaranteed (based on how it's constructed) to aways be in the range [0, 1].
 Another important aspect of the animation is it's **duration**, since animator needs to know how to translate absolute time that has passed since given animation started into **percentage**. That's all for abstract `Animation` definition:
-```
+```swift
 public protocol Animation {
     func tick(at time: RelativeTimeInterval)
     var duration: TimeInterval { get }
@@ -59,7 +59,7 @@ Animatable property is basically an observable property that `PropertyAnimation`
 Animator is an entity that controls the animation transition process. It's an animation engine. In most animation APIs available on iOS this entity is abstracted away and hidden. Thus, we only add animations to `CALayer` and have no idea _who_ calculates interpolated values between animation frames, we only see that those values change on `presentationLayer`. Or, when we add `SKAction`s to `SKNode` we don't know who calculate and apply interpolated values to owning node. 
 
 In essence, animator should be able run animation by calling `tick(at:)` with animation state. It's up to particular `Animator` implementation when to do animation tick, but it should be able to start processing animation:
-```
+```swift
 public protocol Animator {
     func run(animation: Animation)
 }
@@ -74,7 +74,7 @@ All these animators are substitutable, animation's behavior should not depend on
 
 # Usage
 `AnyAnimation` APIs usage is similar to that of `SpriteKit`:
-```
+```swift
 var rotateAnimation = BasicAnimation(from: 0.0, to: 1.0, duration: 3.0) { (percentage: CGFloat) in
     view.transform = CGAffineTransform(rotationAngle: CGFloat.pi * 0.5 * percentage)
 }
