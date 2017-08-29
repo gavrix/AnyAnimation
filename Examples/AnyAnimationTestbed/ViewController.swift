@@ -8,21 +8,22 @@ import AnyAnimation
 
 class ViewController: UIViewController {
 
+    var animatingView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         
-        let view = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 100, height: 100)))
-        view.backgroundColor = .red
-        view.center = self.view.center
-        self.view.addSubview(view)
+        animatingView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 100, height: 100)))
+        animatingView.backgroundColor = .red
+        animatingView.center = self.view.center
+        self.view.addSubview(animatingView)
         
         let viewYPositionProperty = AnimatableProperty(view.center.y) { value in
-            view.center.y = value
+            self.animatingView.center.y = value
         }
         
         var rotateAnimation = BasicAnimation(from: 0.0, to: 1.0, duration: 3.0) { (percentage: CGFloat) in
-            view.transform = CGAffineTransform(rotationAngle: CGFloat.pi * 0.5 * percentage)
+            self.animatingView.transform = CGAffineTransform(rotationAngle: CGFloat.pi * 0.5 * percentage)
         }
         
         var moveAnimation = BasicAnimation(from: view.center.y, to: view.center.y + 100, on: viewYPositionProperty, duration: 1.5)
@@ -45,7 +46,24 @@ class ViewController: UIViewController {
                 rotateAnimation.inverted(),
                 keyPointsAnimation
                 ]))
+        self.animatingViewXPosition.value += 100
 
+    }
+    
+    lazy var animatingViewXPosition: ImplicitlyAnimatableProperty<CGFloat> = {
+        return ImplicitlyAnimatableProperty(self.animatingView.center.x,
+                                            animationProvider: AnimationProvider()) { [weak self] value in
+                                                self?.animatingView.center.x = value
+        }
+    }()
+    
+    class AnimationProvider: ImplicitAnimationProvider {
+        typealias T = CGFloat
+        func animation(for property: AnimatableProperty<T>, from:T, to: T) -> Animation {
+            var animation = BasicAnimation(from: from, to: to, on: property, duration: 3.0)
+            animation.timingFunction = AnimationTiming.square(time:)
+            return animation
+        }
     }
 
 }
