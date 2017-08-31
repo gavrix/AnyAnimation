@@ -28,7 +28,7 @@ public protocol ImplicitAnimationProvider {
     func animation(for property: AnimatableProperty<T>, from:T, to: T) -> Animation
 }
 
-class ErasedImplicitAnimationProvider<Type: Interpolatable>: ImplicitAnimationProvider {
+fileprivate class ErasedImplicitAnimationProvider<Type: Interpolatable>: ImplicitAnimationProvider {
     typealias T = Type
     private var animatinoFunc: (_ property: AnimatableProperty<T>, _ from: T, _ to:T) -> Animation
     func animation(for property: AnimatableProperty<T>, from:T, to: T) -> Animation {
@@ -39,11 +39,26 @@ class ErasedImplicitAnimationProvider<Type: Interpolatable>: ImplicitAnimationPr
         animatinoFunc = provider.animation
     }
 }
+
 extension ImplicitAnimationProvider {
     var animator: Animator {
         return ImplicitAnimator.current
     }
 }
+
+public final class DynamicImplicitAnimationProvider<Type: Interpolatable>: ImplicitAnimationProvider {
+    public typealias T = Type
+    private var retainedFunction: (AnimatableProperty<T>, T, T) -> Animation
+  
+    public func animation(for property: AnimatableProperty<T>, from:T, to: T) -> Animation {
+        return retainedFunction(property, from, to)
+    }
+    
+    public init(animationProviderFunc: @escaping (AnimatableProperty<T>, T, T) -> Animation) {
+        self.retainedFunction = animationProviderFunc
+    }
+}
+
 
 public class ImplicitlyAnimatableProperty<T: Interpolatable> {
     fileprivate var property: AnimatableProperty<T>
