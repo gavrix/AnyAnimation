@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A5920C791F5F543C00E22EF4 /* ManualAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5920C781F5F543C00E22EF4 /* ManualAnimator.swift */; };
 		A5E76AEC1F47A20B00E33DE8 /* KeyPointsAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E76AEB1F47A20B00E33DE8 /* KeyPointsAnimation.swift */; };
 		A5FBEFB91F46A1BF00F62672 /* AnyAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = A5FBEFB71F46A1BF00F62672 /* AnyAnimation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A5FBEFC61F46A1F000F62672 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FBEFC31F46A1F000F62672 /* Animations.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A5920C781F5F543C00E22EF4 /* ManualAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManualAnimator.swift; sourceTree = "<group>"; };
 		A5E76AEB1F47A20B00E33DE8 /* KeyPointsAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyPointsAnimation.swift; sourceTree = "<group>"; };
 		A5FBEFB41F46A1BF00F62672 /* AnyAnimation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AnyAnimation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5FBEFB71F46A1BF00F62672 /* AnyAnimation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnyAnimation.h; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				A5FBEFCA1F46A20200F62672 /* SpriteKitAnimator.swift */,
 				A5FBEFCB1F46A20200F62672 /* CALayerAnimator.swift */,
 				A5FBEFCC1F46A20200F62672 /* DisplayLinkAnimator.swift */,
+				A5920C781F5F543C00E22EF4 /* ManualAnimator.swift */,
 			);
 			name = Animators;
 			sourceTree = "<group>";
@@ -177,6 +180,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5920C791F5F543C00E22EF4 /* ManualAnimator.swift in Sources */,
 				A5FBEFCD1F46A20200F62672 /* SpriteKitAnimator.swift in Sources */,
 				A5FBEFC71F46A1F000F62672 /* Definitions.swift in Sources */,
 				A5FBEFC61F46A1F000F62672 /* Animations.swift in Sources */,
