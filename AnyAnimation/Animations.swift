@@ -30,13 +30,13 @@ public protocol ImplicitAnimationProvider {
 
 fileprivate class ErasedImplicitAnimationProvider<Type: Interpolatable>: ImplicitAnimationProvider {
     typealias T = Type
-    private var animatinoFunc: (_ property: AnimatableProperty<T>, _ from: T, _ to:T) -> Animation
+    private var animationFunc: (_ property: AnimatableProperty<T>, _ from: T, _ to:T) -> Animation
     func animation(for property: AnimatableProperty<T>, from:T, to: T) -> Animation {
-        return animatinoFunc(property, from, to)
+        return animationFunc(property, from, to)
     }
     
     init<P: ImplicitAnimationProvider>(_ provider: P) where P.T == Type {
-        animatinoFunc = provider.animation
+        animationFunc = provider.animation
     }
 }
 
