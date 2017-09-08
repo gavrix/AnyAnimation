@@ -5,7 +5,7 @@
 
 import Foundation
 
-public class AnimatableProperty<T: Interpolatable> {
+public final class AnimatableProperty<T: Interpolatable> {
     fileprivate(set) public var value: T {
         didSet {
             didChange(value)
@@ -19,7 +19,68 @@ public class AnimatableProperty<T: Interpolatable> {
     }
 }
 
+class ImplicitAnimator {
+    public static var current: Animator = DisplayLinkAnimator()
+}
 
+public protocol ImplicitAnimationProvider {
+    associatedtype T: Interpolatable
+    func animation(for property: AnimatableProperty<T>, from:T, to: T) -> Animation
+}
+
+fileprivate class ErasedImplicitAnimationProvider<Type: Interpolatable>: ImplicitAnimationProvider {
+    typealias T = Type
+    private var animationFunc: (_ property: AnimatableProperty<T>, _ from: T, _ to:T) -> Animation
+    func animation(for property: AnimatableProperty<T>, from:T, to: T) -> Animation {
+        return animationFunc(property, from, to)
+    }
+    
+    init<P: ImplicitAnimationProvider>(_ provider: P) where P.T == Type {
+        animationFunc = provider.animation
+    }
+}
+
+extension ImplicitAnimationProvider {
+    var animator: Animator {
+        return ImplicitAnimator.current
+    }
+}
+
+public final class DynamicImplicitAnimationProvider<Type: Interpolatable>: ImplicitAnimationProvider {
+    public typealias T = Type
+    private var retainedFunction: (AnimatableProperty<T>, T, T) -> Animation
+  
+    public func animation(for property: AnimatableProperty<T>, from:T, to: T) -> Animation {
+        return retainedFunction(property, from, to)
+    }
+    
+    public init(animationProviderFunc: @escaping (AnimatableProperty<T>, T, T) -> Animation) {
+        self.retainedFunction = animationProviderFunc
+    }
+}
+
+
+public class ImplicitlyAnimatableProperty<T: Interpolatable> {
+    fileprivate var property: AnimatableProperty<T>
+    fileprivate var animationProvider: ErasedImplicitAnimationProvider<T>
+    
+    public init<P: ImplicitAnimationProvider>(_ value: T, animationProvider: P, didChange: @escaping (T) -> Void) where P.T == T {
+        self.property = AnimatableProperty(value, didChange: didChange)
+        self.animationProvider = ErasedImplicitAnimationProvider(animationProvider)
+        self.value = value
+    }
+    
+    public var value: T {
+        didSet {
+            let animation = animationProvider.animation(for: self.property, from: self.property.value, to: self.value)
+            animationProvider.animator.run(animation: animation)
+        }
+    }
+    
+    public var presentationValue: T {
+        return self.property.value
+    }
+}
 
 public protocol Animation {
     func tick(at time: RelativeTimeInterval)
