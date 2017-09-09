@@ -10,12 +10,7 @@ import Foundation
 
 public class ManualAnimator: Animator {
   
-  struct EmptyAnimation: Animation {
-    var duration: TimeInterval = 0
-    func tick(at time: RelativeTimeInterval) {}
-  }
-  
-  var currentAnimation: Animation = EmptyAnimation()
+  var currentAnimation: Animation?
   
   public init() {}
   
@@ -26,7 +21,7 @@ public class ManualAnimator: Animator {
   
   public var time: RelativeTimeInterval = .zero {
     didSet {
-      self.currentAnimation.tick(at: time)
+      self.currentAnimation?.tick(at: time)
     }
   }
 }
