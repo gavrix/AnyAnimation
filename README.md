@@ -52,8 +52,32 @@ More concrete `Animation` implementation are sound with QuartzCore animation's c
     - **`AnimationGroup`** _synchronizes animations in parallel_
     - **`PropertyAnimation`** _abstract, defines **animatable property** and **timing function**_
         - **`BasicAnimation`** _defines linear interpolation between **initial** and **final**_
+        - **`KeyPointsAnimation`** _defines linear interpolation between set of points_
 
 Animatable property is basically an observable property that `PropertyAnimation` can modify and be sure that owner of that property was notified about the change.
+
+### Implicit animations
+`AnyAnimation` provides support for implicit animation using runtime-dynamic instance of current animator (since it's not practical to provide it specifically for every animatable property). Current animator can be setup using
+`ImplicitAnimator.current` property. Implicitly animatable property is an instance of `ImplicitlyAnimatableProperty` whose interface is very similar to `AnimatableProperty` except it take instance of `ImplicitAnimationProvider` to generate animations whenever `value` of `ImplicitAnimationProvider` changes. Along with `value` which always a final state of the animation, `ImplicitAnimationProvider` provides `presentationValue` which represents actual value at the time. Here's usage example:
+
+```swift
+class AnimationProvider: ImplicitAnimationProvider {
+    typealias T = CGFloat
+    func animation(for property: AnimatableProperty<T>, from:T, to: T) -> Animation {
+        var animation = BasicAnimation(from: from, to: to, on: property, duration: 3.0)
+        animation.timingFunction = AnimationTiming.square(time:)
+        return animation
+    }
+}
+
+let property = ImplicitlyAnimatableProperty(self.animatingView.center.x,
+                                    animationProvider: AnimationProvider()) { [weak self] value in
+                                        self?.animatingView.center.x = value
+}
+
+property.value += 100
+```
+
 
 ### Animator
 Animator is an entity that controls the animation transition process. It's an animation engine. In most animation APIs available on iOS this entity is abstracted away and hidden. Thus, we only add animations to `CALayer` and have no idea _who_ calculates interpolated values between animation frames, we only see that those values change on `presentationLayer`. Or, when we add `SKAction`s to `SKNode` we don't know who calculate and apply interpolated values to owning node. 
